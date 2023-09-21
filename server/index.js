@@ -1,8 +1,10 @@
 const express = require("express");
 const app = express();
 const db = require("./models");
+const cors = require("cors");
 
 app.use(express.json());
+app.use(cors());
 
 //Router
 const postRouter = require("./routes/Posts");
@@ -13,8 +15,6 @@ db.sequelize.sync().then(() => {
     console.log("Server Running on port 3001");
   });
 });
-
-
 
 /**
  * 

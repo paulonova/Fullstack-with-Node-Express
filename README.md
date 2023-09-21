@@ -82,3 +82,25 @@ ps: Will ask for the password...
 
 <h3>Create Routes Folder</h3>
 
+```bash
+npm install react-router-dom
+```
+
+PS: I will create the BrowserRouter in App.js !
+
+
+
+
+# Create React Frontend inside of client folder
+
+<h3>To make the request work I need to install "cors"</h3>
+
+```bash
+npm install cors
+```
+Link: https://github.com/expressjs/cors#readme
+
+<p>cors: "CORS" stands for "Cross-Origin Resource Sharing". It's a security feature implemented in web browsers to control requests made to a domain different from the one from which the web page originated. The cors package is a Node.js middleware that can be used to enable CORS in web applications. When you integrate the cors middleware into your Node.js application, it modifies the HTTP headers in a way that allows specified cross-origin requests, making it easier to build APIs that can be accessed from different origins (domains).</p>
+
+<p>If you're developing an API using Node.js and you want to allow requests from different origins (e.g., if you have a frontend application on one domain and a backend API on another), you'd likely use the cors package to handle CORS-related issues. After installing the package with npm install cors, you can integrate it into your Express.js (or similar) application.
+</p>
