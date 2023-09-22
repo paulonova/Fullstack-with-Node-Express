@@ -104,3 +104,53 @@ Link: https://github.com/expressjs/cors#readme
 
 <p>If you're developing an API using Node.js and you want to allow requests from different origins (e.g., if you have a frontend application on one domain and a backend API on another), you'd likely use the cors package to handle CORS-related issues. After installing the package with npm install cors, you can integrate it into your Express.js (or similar) application.
 </p>
+
+# Create Formulary using <strong>Formik</strong>
+
+```bash
+npm install formik
+```
+
+link: https://formik.org/
+
+<p>With Formik I don´t need to set any state to store the input data, Formik handle his for me.. </p>
+
+## Form Validation using <strong>YUP</strong>
+
+```bash
+npm install yup
+```
+
+link: https://github.com/jquense/yup
+
+
+# Navigate to a single post by ID
+<p style="color: red">useHistory is deprecated</p>
+
+useNavigate() is a hook introduced in version 6 of react-router-dom. It provides a function that allows you to programmatically navigate to different routes within your React application.
+
+Here's a short breakdown:
+
+Functionality: The hook returns a function, often captured in a variable named navigate.
+
+Usage: You can call this function with a path to navigate to another route. Optionally, you can also provide state and other navigation options.
+
+Replacement for useHistory: In previous versions of react-router-dom (v5 and earlier), you would use the useHistory hook to get access to the history object and then use history.push() or history.replace() to perform navigation. In v6, useNavigate offers a more straightforward way to achieve the same result.
+
+Example:
+
+```bash
+import { useNavigate } from 'react-router-dom';
+
+function MyComponent() {
+  const navigate = useNavigate();
+
+  const goToHomePage = () => {
+    navigate('/home');
+  };
+
+  return <button onClick={goToHomePage}>Go to Home</button>;
+}
+```
+
+In this example, clicking the button will navigate the user to the /home route. The useNavigate hook makes programmatic navigation in React components more concise and intuitive, aligning better with the hooks paradigm.
