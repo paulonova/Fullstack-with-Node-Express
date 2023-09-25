@@ -1,4 +1,5 @@
 # Fullstack React and Node js
+### Full Stack Web Development Course - ReactJS, NodeJS, Express, MySQL
 
 Divide in two folders:
 
@@ -88,6 +89,14 @@ npm install react-router-dom
 
 PS: I will create the BrowserRouter in App.js !
 
+## Process to create Table and Route on Server side
+
+<ul>
+  <li>Create the table as a Component in models folder, to generate the table in database</li>
+  <li>Create a route in the routes folder, to generate the methods of CRUD (endpoint)</li>
+  <li>Create a in server index.js </li>
+</ul>
+
 
 
 
@@ -125,7 +134,7 @@ link: https://github.com/jquense/yup
 
 
 # Navigate to a single post by ID
-<p style="color: red">useHistory is deprecated</p>
+<p>>>> useHistory is deprecated</p>
 
 useNavigate() is a hook introduced in version 6 of react-router-dom. It provides a function that allows you to programmatically navigate to different routes within your React application.
 

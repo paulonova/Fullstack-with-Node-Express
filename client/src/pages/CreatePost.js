@@ -2,8 +2,10 @@ import React from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from 'yup';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function CreatePost() {
+  let navigate = useNavigate();
 
   const initialValues = {
     title: "",
@@ -18,9 +20,10 @@ function CreatePost() {
   })
 
   const onSubmit=(data)=>{
-    axios.post(process.env.REACT_APP_BASE_URL, data)
+    axios.post(process.env.REACT_APP_BASE_URL , data)
     .then((response) =>{
       console.log("Worked! : ", data);
+      navigate('/');
     })
     
   }
@@ -43,6 +46,8 @@ function CreatePost() {
           <label>Post: </label>
           <ErrorMessage name="postText" component="span"/>
           <Field
+            component="textarea"
+            rows="5" 
             autoComplete="off"
             id="inputCreatePost"
             name="postText"

@@ -21,7 +21,7 @@ function Home() {
     <div className="flex justify-center flex-wrap">
       {listOfPosts.map((value, key) => {
         return(
-          <div className='m-5 text-white cursor-pointer' key={key} onClick={() => navigate(`/post/${value.id}`)}>
+          <div className='m-5 text-white cursor-pointer w-[250px] ' key={key} onClick={() => navigate(`/post/${value.id}`)}>
             <div className='bg-slate-500 p-5'>
               <h2 className='text-[30px] text-center'>{value.title}</h2>
               <p>{value.postText}</p>
