@@ -1,69 +1,107 @@
-import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
-import axios from 'axios'
-
-
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import { format, getDate, getMonth, getYear } from "date-fns";
 
 function Post() {
-  let {id} = useParams();
+  let { id } = useParams();
   const [postObject, setPostObject] = useState({});
-  
+  const [comments, setComments] = useState([]);
+  const [newComment, setNewComment] = useState('');
 
-  useEffect(()=>{
-    axios.get(`${process.env.REACT_APP_BASE_URL}/${id}`)
-    .then((response)=>{
-      console.log("RESP: ", response.data)
+  useEffect(() => {
+    axios.get(`${process.env.REACT_APP_BASE_URL}/${id}`).then((response) => {
       setPostObject(response.data);
-    })
-  },[])
+    });
 
-  
+    axios
+      .get(`${process.env.REACT_APP_BASE_URL_COMMENTS}/comments/${id}`)
+      .then((response) => {
+        console.log("COMMENTS: ", response.data);
+        setComments(response.data);
+      });
+  }, []);
+
+  const addComment = (data) => {
+    axios
+      .post(`${process.env.REACT_APP_BASE_URL_COMMENTS}/comments`, {
+        commentBody: newComment,
+        PostId: id,
+      })
+      .then((response) => {
+        //Update the list automatic...
+        const commentToAdd = { commentBody: newComment };
+        setComments([...comments, commentToAdd]);
+        setNewComment('');
+      });
+  };
+
   return (
-<article className="container my-24 mx-auto md:px-6">
-  <section className="mb-32 text-center">
-    <div className="flex justify-center">
-      <div className="max-w-[800px]">
-        <h2 className="mb-12 text-5xl text-slate-800 font-bold tracking-tight md:text-6xl xl:text-7xl">
-          {postObject.title}
-        </h2>
-        <p className="text-lg text-neutral-500">
-          {postObject.postText}
-        </p>
-        <p className="text-sm text-slate-800">
-          Author: {postObject.userName}
-        </p>
-      </div>
-    </div>
-  </section>
-  <div>
+    <article className="container py-[50px] mx-auto md:px-6 bg-white">
+      <section className="mb-32 text-center">
+        <div className="flex justify-center">
+          <div className="max-w-[800px]">
+            <h2 className="mb-12 text-5xl text-slate-800 font-bold tracking-tight md:text-6xl xl:text-7xl">
+              {postObject.title}
+            </h2>
+            <p className="text-lg text-neutral-500">{postObject.postText}</p>
+            <p className="text-sm text-slate-800">
+              Author: {postObject.userName}
+            </p>
+          </div>
+        </div>
+      </section>
 
-  </div>
-</article>
-  )
+      <section className="text-left">
+        <div>
+          <h3>Add Comment</h3>
+          <div className="flex justify-between ">
+            <textarea
+              onChange={(e) => setNewComment(e.target.value)}
+              className="flex-1 border border-gray-400"
+              value={newComment}
+              rows="3"
+              placeholder="Comments..."
+              autoComplete="off"
+            />
+            <button onClick={addComment} className="btn ml-2">
+              Add Comments
+            </button>
+          </div>
+        </div>
+        <div className="mt-10">
+          <h3>All Comments</h3>
+          {comments.map((comment, key) => {
+            return (
+              <div
+                className="my-8 border border-gray-400 p-5 bg-gray-300 hover:shadow-xl"
+                key={key}
+              >
+                <div className="mb-3">
+                  <small>
+                    Created:{" "}
+                    {getYear(new Date(comment.createdAt)) +
+                      "-" +
+                      getMonth(new Date(comment.createdAt)) +
+                      "-" +
+                      getDate(new Date(comment.createdAt))}
+                  </small>
+                </div>
+                <p>{comment.commentBody}</p>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+    </article>
+  );
 }
 
-export default Post
-
+export default Post;
 
 /**
- * The useParams() hook lets you retrieve these dynamic 
+ * The useParams() hook lets you retrieve these dynamic
  * parameters as an object from within a component.
- * 
+ *
  * the {id} must match with the component ID name..
- */
-
-
-/**
- * <div className='leftSide'>
-        <div className='post' id="individual">
-          <div className='title'>{postObject.title}</div>
-          <div className='postText'>{postObject.postText}</div>
-          <div className='footer'>{postObject.userName}</div>
-        </div>
-        
-      </div>
-      <div className='rightSide'>
-
-      </div>
- * 
  */

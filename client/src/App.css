@@ -5,11 +5,22 @@
 
 .App {
   text-align: center;
+  margin: 0;
+  padding: 0;
 }
 
 body{
   margin: 0;
   padding: 0;
+  max-width: 902px;
+  margin: 0 auto;
+  background-color: 1E2A3B;
+}
+
+.btn{
+  padding: 10px;
+  color: white;
+  background-color: rgb(14, 22, 82);
 }
 
 /* CREATE POST PAGE CSS */
