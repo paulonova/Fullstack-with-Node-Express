@@ -58,7 +58,7 @@ function Post() {
           <div className="flex justify-between ">
             <textarea
               onChange={(e) => setNewComment(e.target.value)}
-              className="flex-1 border border-gray-400"
+              className="flex-1 border border-gray-400 p-2"
               value={newComment}
               rows="3"
               placeholder="Comments..."
