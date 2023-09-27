@@ -17,12 +17,11 @@ function Post() {
     axios
       .get(`${process.env.REACT_APP_BASE_URL_COMMENTS}/comments/${id}`)
       .then((response) => {
-        console.log("COMMENTS: ", response.data);
         setComments(response.data);
       });
   }, []);
 
-  const addComment = (data) => {
+  const addComment = () => {
     axios
       .post(`${process.env.REACT_APP_BASE_URL_COMMENTS}/comments`, {
         commentBody: newComment,

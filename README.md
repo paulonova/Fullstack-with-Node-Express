@@ -163,3 +163,18 @@ function MyComponent() {
 ```
 
 In this example, clicking the button will navigate the user to the /home route. The useNavigate hook makes programmatic navigation in React components more concise and intuitive, aligning better with the hooks paradigm.
+
+
+
+# CREATE AUTHENTICATION
+
+### Install bcrypt
+
+```bash
+npm install bcrypt
+```
+
+Link: https://github.com/kelektiv/node.bcrypt.js#readme
+
+## In Server Side:
+
