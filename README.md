@@ -178,3 +178,18 @@ Link: https://github.com/kelektiv/node.bcrypt.js#readme
 
 ## In Server Side:
 
+
+
+
+# Json Token with
+
+```bash
+npm install jsonwebtoken
+```
+
+Link: https://github.com/auth0/node-jsonwebtoken#readme
+
+
+# Create Middlewares
+
+> Functions that runs before the requests..

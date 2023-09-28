@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { format, getDate, getMonth, getYear } from "date-fns";
+import { getDate, getMonth, getYear } from "date-fns";
 
 function Post() {
   let { id } = useParams();
   const [postObject, setPostObject] = useState({});
   const [comments, setComments] = useState([]);
-  const [newComment, setNewComment] = useState('');
+  const [newComment, setNewComment] = useState("");
 
   useEffect(() => {
     axios.get(`${process.env.REACT_APP_BASE_URL}/${id}`).then((response) => {
@@ -23,15 +23,27 @@ function Post() {
 
   const addComment = () => {
     axios
-      .post(`${process.env.REACT_APP_BASE_URL_COMMENTS}/comments`, {
-        commentBody: newComment,
-        PostId: id,
-      })
+      .post(
+        `${process.env.REACT_APP_BASE_URL_COMMENTS}/comments`,
+        {
+          commentBody: newComment,
+          PostId: id,
+        },
+        {
+          headers: {
+            accessToken: sessionStorage.getItem("accessToken"),
+          },
+        }
+      )
       .then((response) => {
-        //Update the list automatic...
-        const commentToAdd = { commentBody: newComment };
-        setComments([...comments, commentToAdd]);
-        setNewComment('');
+        if (response.data.error) {
+          console.log("ERROR: ", response.data.error)
+        } else {
+          //Update the list automatic...
+          const commentToAdd = { commentBody: newComment };
+          setComments([...comments, commentToAdd]);
+          setNewComment("");
+        }
       });
   };
 
