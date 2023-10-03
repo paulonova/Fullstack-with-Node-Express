@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { getDate, getMonth, getYear } from "date-fns";
 
 function Post() {
   let { id } = useParams();
@@ -24,23 +23,22 @@ function Post() {
   const addComment = () => {
     axios
       .post(
-        `${process.env.REACT_APP_BASE_URL_COMMENTS}/comments`,
-        {
+        `${process.env.REACT_APP_BASE_URL_COMMENTS}/comments`, {
           commentBody: newComment,
           PostId: id,
-        },
-        {
+        }, {
           headers: {
-            accessToken: sessionStorage.getItem("accessToken"),
+            accessToken: localStorage.getItem("accessToken"),
           },
         }
       )
       .then((response) => {
         if (response.data.error) {
-          console.log("ERROR: ", response.data.error)
+          console.log("ERROR: ", response.data.error);
+          alert(response.data.error)
         } else {
           //Update the list automatic...
-          const commentToAdd = { commentBody: newComment };
+          const commentToAdd = { commentBody: newComment, username: response.data.username};
           setComments([...comments, commentToAdd]);
           setNewComment("");
         }
@@ -89,14 +87,7 @@ function Post() {
                 key={key}
               >
                 <div className="mb-3">
-                  <small>
-                    Created:{" "}
-                    {getYear(new Date(comment.createdAt)) +
-                      "-" +
-                      getMonth(new Date(comment.createdAt)) +
-                      "-" +
-                      getDate(new Date(comment.createdAt))}
-                  </small>
+                  <p><small>Author: {comment.username}</small></p>
                 </div>
                 <p>{comment.commentBody}</p>
               </div>

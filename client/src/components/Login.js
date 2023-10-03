@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
+import {AuthContext} from '../helpers/AuthContext'
 
 function Login() {
 
   let navigate = useNavigate();
+  const {setAuthState} = useContext(AuthContext);
 
 
   const validationSchema = Yup.object().shape({
@@ -21,7 +23,8 @@ function Login() {
         if (response.data.error) {
           alert(response.data.error);
         } else {
-          sessionStorage.setItem("accessToken", response.data);
+          localStorage.setItem("accessToken", response.data);
+          setAuthState(true)
           navigate("/");
         }
       });

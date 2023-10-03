@@ -9,6 +9,7 @@ const validateToken = (req, res, next) => {
 
   try {
     const validToken = verify(accessToken, "importantsecret");
+    req.user = validToken;
     if (validToken) {
       return next();
     }
@@ -18,3 +19,10 @@ const validateToken = (req, res, next) => {
 };
 
 module.exports = { validateToken };
+
+
+/**
+ * req.user = validToken.username;
+ * Here I create a variable "user" and set all information I stored in token.
+ * Then I can access this variable in all my requests.. 
+ */
