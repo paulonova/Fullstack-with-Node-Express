@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import Home from "./pages/Home";
 import CreatePost from "./pages/CreatePost";
@@ -7,22 +7,66 @@ import Post from "./pages/Post";
 import Login from "./components/Login";
 import Registration from "./components/Registration";
 import { AuthContext } from "./helpers/AuthContext";
+import axios from "axios";
+import Logout from "./components/Logout";
 
 function App() {
-  const [authState, setAuthState] = useState(false);
+  const [authState, setAuthState] = useState({
+    username: "",
+    id: 0,
+    status: false,
+  }); // Check if you are logged in or not
+
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_BASE_URL_COMMENTS}/auth/auth`, {
+        headers: {
+          accessToken: localStorage.getItem("accessToken"),
+        },
+      })
+      .then((response) => {
+        if (response.data.error) {
+          setAuthState({...authState, status: false}); // Have all state object but change only one, the status
+        } else {
+          setAuthState({
+            username: response.data.username,
+            id: response.data.id,
+            status: true,
+          });
+        }
+      });
+  }, []);
+
+  // Callback function
+  const logout = () => {
+    localStorage.removeItem("accessToken");
+    setAuthState({
+      username: '',
+      id: 0,
+      status: false,
+    });
+  };
+
   return (
     <div className="App">
-      <AuthContext.Provider value={{authState, setAuthState}}>
+      <AuthContext.Provider value={{ authState, setAuthState }}>
         <Router>
-          <nav className="navbar">
-            <Link to="/"> Home Page</Link>
-            <Link to="/createpost"> Create A Post</Link>
-            {!authState && (
-              <>
-                <Link to="/login"> Login</Link>
-                <Link to="/registration"> Registration</Link>
-              </>
-            )}
+          
+          <nav className="navbar flex justify-between items-center">
+            <div>
+              <Link to="/"> Home Page</Link>
+              <Link to="/createpost"> Create A Post</Link>
+              {!authState.status ? (
+                <>
+                  <Link to="/login"> Login</Link>
+                  <Link to="/registration"> Registration</Link>
+                </>
+              ) : (
+                <Logout logout={logout} />
+              )}
+            </div>
+            
+            <h1 className="text-white mx-5">{authState.username}</h1>
           </nav>
 
           <Routes>

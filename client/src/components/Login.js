@@ -8,6 +8,8 @@ import {AuthContext} from '../helpers/AuthContext'
 function Login() {
 
   let navigate = useNavigate();
+
+  //Check if I am logged in! 
   const {setAuthState} = useContext(AuthContext);
 
 
@@ -23,8 +25,12 @@ function Login() {
         if (response.data.error) {
           alert(response.data.error);
         } else {
-          localStorage.setItem("accessToken", response.data);
-          setAuthState(true)
+          localStorage.setItem("accessToken", response.data.token);
+          setAuthState({
+            username:response.data.username,
+            is: response.data.id,
+            status: true
+          })
           navigate("/");
         }
       });
