@@ -1,4 +1,4 @@
-# <a href="https://www.youtube.com/playlist?list=PLpPqplz6dKxUaZ630TY1BFIo5nP-_x-nL">Fullstack React and Node js</a>
+# <a href="https://www.youtube.com/playlist?list=PLpPqplz6dKxUaZ630TY1BFIo5nP-_x-nL" target="_blank">Fullstack React and Node js</a>
 ### Full Stack Web Development Course - ReactJS, NodeJS, Express, MySQL
 
 
