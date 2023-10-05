@@ -1,34 +1,37 @@
 import React, { useState } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Registration() {
+  const [userName, setUserName] = useState("");
+  const [passWord, setPassword] = useState("");
+  let navigate = useNavigate();
 
-  const [userName, setUserName] = useState('')
-  const [passWord, setPassword] = useState('')
-
-  const initialValues ={
+  const initialValues = {
     username: "",
-    password: ""
-  }
+    password: "",
+  };
 
   const validationSchema = Yup.object().shape({
     username: Yup.string().min(3).max(15).required("Required"),
-    password: Yup.string().min(8, "Must be at least 8 characters")
-    .max(16, "Must be max 16 characters").required("Required"),
+    password: Yup.string()
+      .min(8, "Must be at least 8 characters")
+      .max(16, "Must be max 16 characters")
+      .required("Required"),
   });
 
-  const onSubmit=(data)=>{
-    axios.post(`${process.env.REACT_APP_BASE_URL_COMMENTS}/auth`, data)
-    .then(()=>{
-      console.log("User: ", data);
-      setPassword('');
-      setUserName('');
-    })
-  }
+  const onSubmit = (data) => {
+    axios
+      .post(`${process.env.REACT_APP_BASE_URL_COMMENTS}/auth`, data)
+      .then(() => {
+        console.log("User: ", data);
+        setPassword("");
+        setUserName("");
+      });
+      navigate("/");
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
