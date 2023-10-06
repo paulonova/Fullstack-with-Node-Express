@@ -16,8 +16,14 @@ module.exports = (sequelize, DataTypes) => {
   
   //To create a foreignKey
   Posts.associate = (models)=>{
+    
     Posts.hasMany(models.Comments, {
       //If a Posts be deleted, all comments will be deleted as well
+      onDelete: "cascade"
+    });
+
+    Posts.hasMany(models.Likes, {
+      //If a Posts be deleted, all likes will be deleted as well
       onDelete: "cascade"
     });
   }
