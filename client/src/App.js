@@ -9,6 +9,7 @@ import Registration from "./components/Registration";
 import { AuthContext } from "./helpers/AuthContext";
 import axios from "axios";
 import Logout from "./components/Logout";
+import ErrorPage from './pages/ErrorPage';
 
 function App() {
 
@@ -77,6 +78,7 @@ function App() {
             <Route exact path="/post/:id" Component={Post} />
             <Route exact path="/login" Component={Login} />
             <Route exact path="/registration" Component={Registration} />
+            <Route path="*" Component={ErrorPage} />
           </Routes>
         </Router>
       </AuthContext.Provider>
