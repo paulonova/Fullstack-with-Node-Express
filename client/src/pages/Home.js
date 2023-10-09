@@ -2,22 +2,26 @@ import React from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { AiFillLike, AiOutlineLike } from "react-icons/ai";
 import LikeButton from "../components/LikeButton";
 
 function Home() {
   const [listOfPosts, setListOfPosts] = useState([]);
-  const [isLiked, setIsLiked] = useState(false);
   let navigate = useNavigate();
+  const[likedPosts, setLikedPosts] = useState([]);
 
   useEffect(() => {
-    axios.get(process.env.REACT_APP_BASE_URL).then((response) => {
-      console.log("RESP: ", response.data);
-      setListOfPosts(response.data);
+    axios.get(process.env.REACT_APP_BASE_URL, { 
+      headers: { accessToken: localStorage.getItem("accessToken") } 
+
+    }).then((response) => {
+      setListOfPosts(response.data.listOfPosts);
+      console.log("LikedPosts1: ", response.data.likedPosts);
+      setLikedPosts(response.data.likedPosts.map((like) =>{return like.PostId}));      
     });
   }, []);
 
   const likeAPost = (postId) => {
+    
     axios.post(
         "http://localhost:3001/likes",
         { PostId: postId },
@@ -35,13 +39,19 @@ function Home() {
                 likeArray.pop();
                 return { ...post, Likes: likeArray};
               }
-              
-              
             } else {
               return post;
             }
           })
         );
+        // Change icon when click logic
+        if(likedPosts.includes(postId)){
+          setLikedPosts(likedPosts.filter((id) => {
+            return id !== postId;
+          }))
+        }else{
+          setLikedPosts([...likedPosts, postId])
+        }
       });
   };
 
@@ -57,12 +67,11 @@ function Home() {
               <h2 className="text-[30px] text-center">{post.title}</h2>
               <p>{post.postText}</p>
             </div>
-            <div className="bg-slate-700 flex justify-between p-3">
+            <div className="bg-slate-700 flex justify-between items-baseline p-3">
               <p>{post.userName}</p>
-              <div>
+              <div className="flex">
                 <label className="mr-2">{post.Likes.length}</label>
-                {console.log("LIKED: ", post.isLiked)}
-                  <LikeButton postId={post.id} isLiked={post.isLiked} likePost={likeAPost} />
+                <LikeButton postId={post.id} likedPosts={likedPosts} likePost={likeAPost} />
               </div>
             </div>
           </div>
