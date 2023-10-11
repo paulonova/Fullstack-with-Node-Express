@@ -9,10 +9,9 @@ import Registration from "./components/Registration";
 import { AuthContext } from "./helpers/AuthContext";
 import axios from "axios";
 import Logout from "./components/Logout";
-import ErrorPage from './pages/ErrorPage';
+import ErrorPage from "./pages/ErrorPage";
 
 function App() {
-
   const [authState, setAuthState] = useState({
     username: "",
     id: 0,
@@ -28,7 +27,7 @@ function App() {
       })
       .then((response) => {
         if (response.data.error) {
-          setAuthState({...authState, status: false}); // Have all state object but change only one, the status
+          setAuthState({ ...authState, status: false }); // Have all state object but change only one, the status
         } else {
           setAuthState({
             username: response.data.username,
@@ -37,14 +36,14 @@ function App() {
           });
         }
       });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Callback function
   const logout = () => {
     localStorage.removeItem("accessToken");
     setAuthState({
-      username: '',
+      username: "",
       id: 0,
       status: false,
     });
@@ -54,21 +53,22 @@ function App() {
     <div className="App">
       <AuthContext.Provider value={{ authState, setAuthState }}>
         <Router>
-          
           <nav className="navbar flex justify-between items-center">
             <div>
-              <Link to="/"> Home Page</Link>
-              <Link to="/createpost"> Create A Post</Link>
               {!authState.status ? (
                 <>
                   <Link to="/login"> Login</Link>
                   <Link to="/registration"> Registration</Link>
                 </>
               ) : (
-                <Logout logout={logout} />
+                <>
+                  <Link to="/"> Home Page</Link>
+                  <Link to="/createpost"> Create A Post</Link>
+                  <Logout logout={logout} />
+                </>
               )}
             </div>
-            
+
             <h1 className="text-white mx-5">{authState.username}</h1>
           </nav>
 

@@ -3,12 +3,15 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { BsFillTrashFill } from "react-icons/bs";
 import { AuthContext } from "../helpers/AuthContext";
+import { BsTrash } from "react-icons/bs";
+import { useNavigate } from "react-router-dom";
 
 function Post() {
   let { id } = useParams();
   const [postObject, setPostObject] = useState({});
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
+  let navigate = useNavigate();
   //Check if I am logged in!
   const { authState } = useContext(AuthContext);
 
@@ -22,7 +25,7 @@ function Post() {
       .then((response) => {
         setComments(response.data);
       });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const addComment = () => {
@@ -61,13 +64,22 @@ function Post() {
         headers: { accessToken: localStorage.getItem("accessToken") },
       })
       .then(() => {
-       setComments(
-        comments.filter((value) =>{
-          return value.id !== id;
-        })
-       )
+        setComments(
+          comments.filter((value) => {
+            return value.id !== id;
+          })
+        );
       });
   };
+
+  const deletePost = (postId) =>{
+    axios.delete(`http://localhost:3001/posts/${postId}`, {
+        headers: { accessToken: localStorage.getItem("accessToken") },
+      }).then(() => {
+        alert("Post Deleted Successfully!");
+      });
+      navigate("/");
+  }
 
   return (
     <article className="container py-[50px] mx-auto md:px-6 bg-white">
@@ -82,6 +94,15 @@ function Post() {
               Author: {postObject.userName}
             </p>
           </div>
+        </div>
+        <div className="flex items-center justify-center mt-5">
+          {authState.username === postObject.userName && 
+            <div onClick={()=>{deletePost(postObject.id)}} className="btn w-[150px] flex justify-between items-center cursor-pointer">
+              <BsTrash/>
+              <button className=""> Delete Post</button>
+            </div>
+          }
+          
         </div>
       </section>
 
@@ -119,7 +140,12 @@ function Post() {
 
                 <div className="items-end">
                   {authState.username === comment.username && (
-                    <button onClick={() => {deleteComment(comment.id)}} className="text-slate-800 hover:text-slate-500">
+                    <button
+                      onClick={() => {
+                        deleteComment(comment.id);
+                      }}
+                      className="text-slate-800 hover:text-slate-500"
+                    >
                       <BsFillTrashFill />
                     </button>
                   )}

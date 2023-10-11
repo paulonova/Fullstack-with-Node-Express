@@ -4,6 +4,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import LikeButton from "../components/LikeButton";
 
+
+
 function Home() {
   const [listOfPosts, setListOfPosts] = useState([]);
   let navigate = useNavigate();
@@ -59,15 +61,13 @@ function Home() {
     <div className="flex justify-center flex-wrap">
       {listOfPosts.map((post, key) => {
         return (
-          <div className="m-5 text-white w-[250px] " key={key}>
-            <div
-              className="bg-slate-500 p-5 cursor-pointer"
-              onClick={() => navigate(`/post/${post.id}`)}
-            >
+          <div className="m-5 text-white w-[250px] bg-slate-500 relative" key={key}>
+            <div className="h-[230px] p-5 mt-2 cursor-pointer"
+              onClick={() => navigate(`/post/${post.id}`)}>
               <h2 className="text-[30px] text-center">{post.title}</h2>
               <p>{post.postText}</p>
             </div>
-            <div className="bg-slate-700 flex justify-between items-baseline p-3">
+            <div className="bg-slate-700 flex justify-between items-baseline p-3 absolute w-[100%] bottom-0 left-0">
               <p>{post.userName}</p>
               <div className="flex">
                 <label className="mr-2">{post.Likes.length}</label>
