@@ -10,6 +10,7 @@ import { AuthContext } from "./helpers/AuthContext";
 import axios from "axios";
 import Logout from "./components/Logout";
 import ErrorPage from "./pages/ErrorPage";
+import ProfilePage from "./pages/ProfilePage";
 
 function App() {
   const [authState, setAuthState] = useState({
@@ -78,6 +79,7 @@ function App() {
             <Route exact path="/post/:id" Component={Post} />
             <Route exact path="/login" Component={Login} />
             <Route exact path="/registration" Component={Registration} />
+            <Route exact path="/profile/:id" Component={ProfilePage} />
             <Route path="*" Component={ErrorPage} />
           </Routes>
         </Router>
