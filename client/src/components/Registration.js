@@ -5,8 +5,6 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 function Registration() {
-  const [userName, setUserName] = useState("");
-  const [passWord, setPassword] = useState("");
   let navigate = useNavigate();
 
   const initialValues = {
@@ -27,10 +25,9 @@ function Registration() {
       .post(`${process.env.REACT_APP_BASE_URL_COMMENTS}/auth`, data)
       .then(() => {
         console.log("User: ", data);
-        setPassword("");
-        setUserName("");
+        navigate('/');
       });
-      navigate("/");
+      
   };
 
   return (

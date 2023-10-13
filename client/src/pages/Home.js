@@ -1,25 +1,33 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import LikeButton from "../components/LikeButton";
+import { AuthContext } from "../helpers/AuthContext";
 
 
 
 function Home() {
   const [listOfPosts, setListOfPosts] = useState([]);
+  const [likedPosts, setLikedPosts] = useState([]);
+  const { authState } = useContext(AuthContext);
+
   let navigate = useNavigate();
-  const[likedPosts, setLikedPosts] = useState([]);
 
   useEffect(() => {
-    axios.get(process.env.REACT_APP_BASE_URL, { 
+    if(!localStorage.getItem("accessToken")){
+      navigate('/login');
+    }else{
+      axios.get(process.env.REACT_APP_BASE_URL, { 
       headers: { accessToken: localStorage.getItem("accessToken") } 
 
-    }).then((response) => {
-      setListOfPosts(response.data.listOfPosts);
-      console.log("LikedPosts1: ", response.data.likedPosts);
-      setLikedPosts(response.data.likedPosts.map((like) =>{return like.PostId}));      
-    });
+      }).then((response) => {
+        setListOfPosts(response.data.listOfPosts);
+        console.log("LikedPosts1: ", response.data.likedPosts);
+        setLikedPosts(response.data.likedPosts.map((like) =>{return like.PostId}));      
+      });
+    }
+    
   }, []);
 
   const likeAPost = (postId) => {

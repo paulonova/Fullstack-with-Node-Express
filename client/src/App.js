@@ -70,7 +70,7 @@ function App() {
               )}
             </div>
 
-            <h1 className="text-white mx-5">{authState.username}</h1>
+            <a href="/profile/1"><h1 className="text-white mx-5">{authState.username}</h1></a>
           </nav>
 
           <Routes>
