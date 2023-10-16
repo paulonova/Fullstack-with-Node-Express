@@ -13,6 +13,7 @@ import ErrorPage from "./pages/ErrorPage";
 import ProfilePage from "./pages/ProfilePage";
 
 function App() {
+
   const [authState, setAuthState] = useState({
     username: "",
     id: 0,

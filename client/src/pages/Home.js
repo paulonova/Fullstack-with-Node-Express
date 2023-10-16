@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import LikeButton from "../components/LikeButton";
 import { AuthContext } from "../helpers/AuthContext";
 
@@ -76,7 +76,7 @@ function Home() {
               <p>{post.postText}</p>
             </div>
             <div className="bg-slate-700 flex justify-between items-baseline p-3 absolute w-[100%] bottom-0 left-0">
-              <p>{post.userName}</p>
+              <Link to={`/profile/${post.UserId}`}><p className="hover:underline italic">{post.userName}</p></Link>
               <div className="flex">
                 <label className="mr-2">{post.Likes.length}</label>
                 <LikeButton postId={post.id} likedPosts={likedPosts} likePost={likeAPost} />
