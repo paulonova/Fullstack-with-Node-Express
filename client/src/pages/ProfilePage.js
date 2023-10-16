@@ -1,14 +1,14 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { AiFillLike, AiOutlineLike } from "react-icons/ai";
+import { AuthContext } from "../helpers/AuthContext";
 
 function ProfilePage() {
   let { id } = useParams();
   const [userName, setUserName] = useState("");
   const [listOfPosts, setListOfPosts] = useState([]);
-
-  //http://localhost:3001/auth/userinfo/1
+  const { authState } = useContext(AuthContext);
 
   useEffect(() => {
     axios.get(`http://localhost:3001/auth/userinfo/${id}`).then((response) => {
@@ -26,6 +26,11 @@ function ProfilePage() {
     <div>
       <div className="text-3xl mt-10">
         <h1><small>Posted by:</small> {userName}</h1>
+        <div>
+          {authState.username === userName && 
+            <Link className="btn text-sm mt-10 !p-2" to="/changepassword">Change my Password </Link>
+          }
+        </div>
       </div>
       <div className="text-left mt-10">List of Posts</div>
 

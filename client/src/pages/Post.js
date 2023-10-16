@@ -81,15 +81,44 @@ function Post() {
       navigate("/");
   }
 
+  const editPost = (option) => {
+    if (option === 'title') {
+      let newTitle = prompt("Enter new title!", postObject.title);
+      
+      // Check if newTitle is not null and not an empty string
+      if (newTitle !== null && newTitle !== "") {
+        axios.put(`http://localhost:3001/posts/title`, { newTitle: newTitle, id: id }, {
+          headers: { accessToken: localStorage.getItem("accessToken") },
+        });
+        setPostObject({ ...postObject, title: newTitle });
+      } 
+
+    } else {
+      console.log("BODY");
+      let newPostText = prompt("Enter new post text!", postObject.postText);
+  
+      // Check if newPostText is not null and not an empty string
+      if (newPostText !== null && newPostText !== "") {
+        axios.put(`http://localhost:3001/posts/postText`, { newText: newPostText, id: id }, {
+          headers: { accessToken: localStorage.getItem("accessToken") },
+        });
+        setPostObject({ ...postObject, postText: newPostText });
+      } 
+    }
+  }
+  
+
   return (
     <article className="container py-[50px] mx-auto md:px-6 bg-white">
       <section className="mb-32 text-center">
         <div className="flex justify-center">
           <div className="max-w-[800px]">
-            <h2 className="mb-12 text-5xl text-slate-800 font-bold tracking-tight md:text-6xl xl:text-7xl">
+            <h2 onClick={()=> {if(authState.username === postObject.userName){
+              editPost('title')}}} className="inline-block mb-12 text-5xl text-slate-800 font-bold tracking-tight md:text-6xl xl:text-7xl">
               {postObject.title}
             </h2>
-            <p className="text-lg text-neutral-500">{postObject.postText}</p>
+            <p onClick={()=> {if(authState.username === postObject.userName){
+              editPost('body')}}} className="inline-block text-lg text-neutral-500">{postObject.postText}</p>
             <p className="text-sm text-slate-800">
               Author: {postObject.userName}
             </p>

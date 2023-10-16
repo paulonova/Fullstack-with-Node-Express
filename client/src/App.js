@@ -11,6 +11,7 @@ import axios from "axios";
 import Logout from "./components/Logout";
 import ErrorPage from "./pages/ErrorPage";
 import ProfilePage from "./pages/ProfilePage";
+import ChangePassword from "./pages/ChangePassword";
 
 function App() {
 
@@ -79,6 +80,7 @@ function App() {
             <Route exact path="/createpost" Component={CreatePost} />
             <Route exact path="/post/:id" Component={Post} />
             <Route exact path="/login" Component={Login} />
+            <Route exact path="/changepassword" Component={ChangePassword} />
             <Route exact path="/registration" Component={Registration} />
             <Route exact path="/profile/:id" Component={ProfilePage} />
             <Route path="*" Component={ErrorPage} />

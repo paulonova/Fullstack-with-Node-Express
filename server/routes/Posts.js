@@ -36,6 +36,32 @@ router.post("/", validateToken, async (req, res) => {
   res.json(post);
 });
 
+// Update the Post Title
+router.put("/title", validateToken, async (req, res) => {
+  const { newTitle, id } = req.body;
+  await Posts.update(
+    { title: newTitle },  {
+      where: {
+        id: id,
+      }
+    }
+  );
+  res.json(newTitle); 
+});
+
+//Update the post Text
+router.put("/postText", validateToken, async (req, res) => {
+  const { newText, id } = req.body;
+  await Posts.update(
+    { postText: newText },  {
+      where: {
+        id: id,
+      }
+    }
+  );
+  res.json(newText);
+});
+
 router.delete("/:postId", validateToken, async (req, res) => {
   const postId = req.params.postId;
   await Posts.destroy({
