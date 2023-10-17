@@ -199,3 +199,5 @@ Link: https://github.com/auth0/node-jsonwebtoken#readme
 
 
 # Deploy Backend in Heroku
+
+# Deploy Frontend in Netlify
